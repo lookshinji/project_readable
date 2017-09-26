@@ -6,14 +6,30 @@
 
 import React, { Component } from 'react';
 import './style.css';
+import { Row, Col, Button, Glyph } from 'elemental';
 
 class Category extends Component {
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
+      <div className="category">
+        <div className="category-header">
           <h2>Category</h2>
         </div>
+        <ul className="category-lists">
+          <li>
+            <Row>
+              <Col xs='10%'>
+                <Button type="link"><Glyph icon="chevron-up" /></Button>
+                <h3>12</h3>
+                <Button type="link"><Glyph icon="chevron-down" /></Button>
+              </Col>
+              <Col xs='90%'>
+                <h2 href="/post">Title of post, it's probably very long</h2>
+                <a href="/"><span>31</span>coments</a>
+              </Col>
+            </Row>
+          </li>
+        </ul>
       </div>
     );
   }
