@@ -6,15 +6,18 @@
 //Libs
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import './style.css';
+import './style.less';
 
 //Components
 import Category from '../Category/';
+import Main from '../Main/';
+
 
 class App extends Component {
   render() {
     return (
       <div className="app">
+        <Route exact path="/" component={Main} />
         <Route path="/category" component={Category} />
       </div>
     );

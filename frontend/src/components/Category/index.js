@@ -5,7 +5,7 @@
 // deve ter um controle para adicionar novas postagens
 
 import React, { Component } from 'react';
-import './style.css';
+import './style.less';
 import { Row, Col, Button, Glyph } from 'elemental';
 
 class Category extends Component {

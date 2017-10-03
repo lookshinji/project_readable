@@ -7,7 +7,7 @@
 // os comentários também devem ter controles para edição ou exclusão
 
 import React, { Component } from 'react';
-import './style.css';
+import './style.less';
 
 class Post extends Component {
   render() {

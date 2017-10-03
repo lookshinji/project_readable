@@ -2,7 +2,7 @@
 // ao editar, os dados existentes devem ser povoados no formulário
 
 import React, { Component } from 'react';
-import './style.css';
+import './style.less';
 
 class PostForm extends Component {
   render() {
