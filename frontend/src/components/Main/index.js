@@ -7,39 +7,61 @@
 import React, { Component } from 'react';
 import './style.less';
 import { Row, Col, Button, Glyph } from 'elemental';
+import { Link } from 'react-router-dom';
+import * as API from '../../API';
 
 class Main extends Component {
+
+  state = {
+    categories: [],
+    posts: [],
+  }
+
+  componentDidMount(){
+    API.getCategories().then((categories) => {
+      console.log(categories);
+      this.setState({ categories });
+    });
+
+    API.getAllPosts().then((posts) => {
+      console.log(posts);
+      this.setState({ posts });
+    });
+  }
+
   render() {
     return (
       <div className="main">
         <div className="header">
-          <h2>Readable</h2>
+          <h1>Readable</h1>
         </div>
         <Row className="container">
           <Col xs='70%'>
-            <h5 className="subheader">Posts</h5>
+            <h5 className="subheader">All Posts</h5>
             <ul className="main-posts">
-              <li>
-                <Row className="post">
-                  <Col className="main-votes" xs='10%'>
-                    <Button type="link"><Glyph icon="chevron-up" /></Button>
-                    <h3>12</h3>
-                    <Button type="link"><Glyph icon="chevron-down" /></Button>
-                  </Col>
-                  <Col xs='90%'>
-                    <h2 href="/post">Title of post, it's probably very long</h2>
-                    <a href="/"><span>31</span>coments</a>
-                  </Col>
-                </Row>
-              </li>
+              {this.state.posts.map((post) => (
+                <li key={post.id}>
+                  <Row className="post">
+                    <Col className="main-votes" xs='10%'>
+                      <Button type="link"><Glyph icon="chevron-up" /></Button>
+                      <h3>{post.voteScore}</h3>
+                      <Button type="link"><Glyph icon="chevron-down" /></Button>
+                    </Col>
+                    <Col xs='90%'>
+                      <h2>{post.title}</h2>
+                      <a href="/"><span>31</span>coments</a>
+                    </Col>
+                  </Row>
+                </li>
+              ))}
             </ul>
           </Col>
           <Col xs='30%'>
             <h5 className="subheader">Categories</h5>
             <ol className='main-categories'>
-              <li>cience</li>
-              <li>cience</li>
-              <li>cience</li>
+              {this.state.categories.map((category) => (
+                <li key={category.name}><Link to={`${category.path}`}>{category.name}</Link></li>
+              ))}
             </ol>
           </Col>
         </Row>

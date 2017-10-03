@@ -1,14 +1,20 @@
 @import '../../styles/variables.less';
 
-.category-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100px;
-  margin-bottom:30px;
-  background-color: @blue;
+.category .header {
+  justify-content: space-between;
+
+  h1 {
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0;
+    flex-grow: 1;
+  }
 }
 
-.category-lists {
-  margin: 30px;
+.back-button {
+  flex-grow: 1;
+
+  i {
+    font-size: 30px;
+  }
 }
