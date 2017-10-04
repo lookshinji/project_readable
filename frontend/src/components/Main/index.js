@@ -9,27 +9,31 @@ import './style.less';
 import { Row, Col, Button, Glyph } from 'elemental';
 import { Link } from 'react-router-dom';
 import * as API from '../../API';
+import { createCategories } from  '../../actions.js';
+import { connect } from 'react-redux';
 
 class Main extends Component {
-
   state = {
-    categories: [],
     posts: [],
   }
 
   componentDidMount(){
-    API.getCategories().then((categories) => {
-      console.log(categories);
-      this.setState({ categories });
-    });
+    const { createCategories } = this.props;
+
+    API.getCategories()
+      .then((categories) => {
+        createCategories(categories);
+      });
 
     API.getAllPosts().then((posts) => {
-      console.log(posts);
       this.setState({ posts });
     });
   }
 
   render() {
+    const { categories } = this.props;
+    console.log(categories);
+
     return (
       <div className="main">
         <div className="header">
@@ -59,7 +63,7 @@ class Main extends Component {
           <Col xs='30%'>
             <h5 className="subheader">Categories</h5>
             <ol className='main-categories'>
-              {this.state.categories.map((category) => (
+              {categories.map((category) => (
                 <li key={category.name}><Link to={`${category.path}`}>{category.name}</Link></li>
               ))}
             </ol>
@@ -70,4 +74,8 @@ class Main extends Component {
   }
 }
 
-export default Main;
+export default connect(state => {
+  return {
+    categories: state.categories
+  };
+}, { createCategories })(Main);
