@@ -9,31 +9,29 @@ import './style.less';
 import { Row, Col, Button, Glyph } from 'elemental';
 import { Link } from 'react-router-dom';
 import * as API from '../../API';
-import { createCategories } from  '../../actions.js';
+import { fetchCategories, fetchPosts } from  '../../actions.js';
 import { connect } from 'react-redux';
 
 class Main extends Component {
-  state = {
-    posts: [],
-  }
 
   componentDidMount(){
-    const { createCategories } = this.props;
+    const { fetchCategories, fetchPosts } = this.props;
 
     API.getCategories()
       .then((categories) => {
-        createCategories(categories);
+        fetchCategories(categories);
       });
 
-    API.getAllPosts().then((posts) => {
-      this.setState({ posts });
-    });
+    API.getAllPosts()
+      .then((posts) => {
+        console.log(posts);
+        fetchPosts(posts);
+      });
   }
 
   render() {
-    const { categories } = this.props;
-    console.log(categories);
-
+    const { categories, posts } = this.props;
+    console.log('posts in render', posts);
     return (
       <div className="main">
         <div className="header">
@@ -43,7 +41,7 @@ class Main extends Component {
           <Col xs='70%'>
             <h5 className="subheader">All Posts</h5>
             <ul className="main-posts">
-              {this.state.posts.map((post) => (
+              {posts.map((post) => (
                 <li key={post.id}>
                   <Row className="post">
                     <Col className="main-votes" xs='10%'>
@@ -76,6 +74,7 @@ class Main extends Component {
 
 export default connect(state => {
   return {
-    categories: state.categories
+    categories: state.categories,
+    posts: state.posts
   };
-}, { createCategories })(Main);
+}, { fetchCategories, fetchPosts })(Main);

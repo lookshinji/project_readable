@@ -9,25 +9,34 @@ import { Link } from 'react-router-dom';
 import './style.less';
 import { Row, Col, Button, Glyph } from 'elemental';
 import * as API from '../../API';
+import { fetchCategoryPosts, updateVoteScore } from  '../../actions.js';
+import { connect } from 'react-redux';
 
 
 class Category extends Component {
-
-  state = {
-    categoryposts: []
-  }
-
   componentDidMount(){
     const { category } = this.props.match.params;
-    API.getCategoryPost(category).then((categoryposts) => {
-      console.log(categoryposts);
-      this.setState({ categoryposts });
-    });
+    const { fetchCategoryPosts } = this.props;
+
+    API.getCategoryPost(category)
+      .then((categoryPosts) => {
+        fetchCategoryPosts(categoryPosts);
+      });
+  }
+
+  handleVote = (id, vote) => {
+    const { updateVoteScore } = this.props;
+
+    API.updateVoteScore(id, vote)
+      .then((post) => {
+        updateVoteScore(id, post.voteScore);
+      });
   }
 
   render() {
     const match = this.props.match;
     const { category } = match.params;
+    const { categoryPosts } = this.props;
 
     return (
       <div className="category">
@@ -38,13 +47,13 @@ class Category extends Component {
         <Row className="container">
           <Col>
             <ul className="main-posts">
-              {this.state.categoryposts.map((post) => (
+              {categoryPosts.map((post) => (
                 <li key={post.id}>
                   <Row className="post">
                     <Col className="main-votes" xs='10%'>
-                      <Button type="link"><Glyph icon="chevron-up" /></Button>
+                      <Button type="link" onClick={() => this.handleVote(post.id, 1)}><Glyph icon="chevron-up" /></Button>
                       <h3>{post.voteScore}</h3>
-                      <Button type="link"><Glyph icon="chevron-down" /></Button>
+                      <Button type="link" onClick={() => this.handleVote(post.id, -1)}><Glyph icon="chevron-down" /></Button>
                     </Col>
                     <Col xs='90%'>
                       <h2>{post.title}</h2>
@@ -61,4 +70,9 @@ class Category extends Component {
   }
 }
 
-export default Category;
+export default connect(state => {
+  return {
+    categoryPosts: state.categoryPosts,
+    voteScore: state.voteScore,
+  };
+}, { fetchCategoryPosts, updateVoteScore })(Category);
