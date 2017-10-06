@@ -4,13 +4,22 @@
 // deve ter um controle para ordenar o método da lista, incluindo, no mínimo, ordenar por voteScore e ordenar por marcação de hora
 // deve ter um controle para adicionar novas postagens
 
+//Libs
 import React, { Component } from 'react';
-import './style.less';
-import { Row, Col, Button, Glyph } from 'elemental';
 import { Link } from 'react-router-dom';
-import * as API from '../../API';
-import { fetchCategories, fetchPosts } from  '../../actions.js';
 import { connect } from 'react-redux';
+
+//API
+import * as API from '../../API';
+
+//Components
+import { fetchCategories, fetchPosts, updateVoteScore  } from  '../../actions.js';
+import PostList from '../PostList/';
+import Header from '../Header/';
+
+//Style
+import './style.less';
+import { Row, Col } from 'elemental';
 
 class Main extends Component {
 
@@ -24,36 +33,31 @@ class Main extends Component {
 
     API.getAllPosts()
       .then((posts) => {
-        console.log(posts);
         fetchPosts(posts);
+      });
+  }
+
+  handleVote = (id, vote) => {
+    const { updateVoteScore } = this.props;
+
+    API.updateVoteScore(id, vote)
+      .then((post) => {
+        updateVoteScore(id, post.voteScore);
       });
   }
 
   render() {
     const { categories, posts } = this.props;
-    console.log('posts in render', posts);
     return (
       <div className="main">
-        <div className="header">
-          <h1>Readable</h1>
-        </div>
+        <Header title='Readable'/>
         <Row className="container">
           <Col xs='70%'>
             <h5 className="subheader">All Posts</h5>
             <ul className="main-posts">
               {posts.map((post) => (
                 <li key={post.id}>
-                  <Row className="post">
-                    <Col className="main-votes" xs='10%'>
-                      <Button type="link"><Glyph icon="chevron-up" /></Button>
-                      <h3>{post.voteScore}</h3>
-                      <Button type="link"><Glyph icon="chevron-down" /></Button>
-                    </Col>
-                    <Col xs='90%'>
-                      <h2>{post.title}</h2>
-                      <a href="/"><span>31</span>coments</a>
-                    </Col>
-                  </Row>
+                  <PostList post={post} handleVote={this.handleVote} />
                 </li>
               ))}
             </ul>
@@ -62,7 +66,7 @@ class Main extends Component {
             <h5 className="subheader">Categories</h5>
             <ol className='main-categories'>
               {categories.map((category) => (
-                <li key={category.name}><Link to={`${category.path}`}>{category.name}</Link></li>
+                <li key={category.name}><Link to={`category/${category.path}`}>{category.name}</Link></li>
               ))}
             </ol>
           </Col>
@@ -77,4 +81,4 @@ export default connect(state => {
     categories: state.categories,
     posts: state.posts
   };
-}, { fetchCategories, fetchPosts })(Main);
+}, { fetchCategories, fetchPosts, updateVoteScore })(Main);

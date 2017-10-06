@@ -6,19 +6,27 @@
 // implemente o formulário de comentários da forma que quiser (em linha, modal, etc.)
 // os comentários também devem ter controles para edição ou exclusão
 
-import React, { Component } from 'react';
+import React from 'react';
+
+//Style
+import { Row, Col, Button, Glyph } from 'elemental';
 import './style.less';
 
-class Post extends Component {
-  render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <h2>POST</h2>
-        </div>
-      </div>
-    );
-  }
-}
+const PostList = (props) => {
+  const { post, handleVote } = props;
+  return (
+    <Row className="post">
+      <Col className="main-votes" xs='10%'>
+        <Button type="link" onClick={() => handleVote(props.post.id, 1)}><Glyph icon="chevron-up" /></Button>
+        <h3>{post.voteScore}</h3>
+        <Button type="link" onClick={() => handleVote(props.post.id, -1)}><Glyph icon="chevron-down" /></Button>
+      </Col>
+      <Col xs='90%'>
+        <h2>{post.title}</h2>
+        <a href="/"><span>31</span>coments</a>
+      </Col>
+    </Row>
+  );
+};
 
-export default Post;
+export default PostList;

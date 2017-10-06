@@ -2,15 +2,18 @@
 // ao editar, os dados existentes devem ser povoados no formulário
 
 import React, { Component } from 'react';
+
+//Components
+import Header from '../Header/';
+
+//styles
 import './style.less';
 
 class PostForm extends Component {
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <h2>POSTFORM</h2>
-        </div>
+        <Header title='Add Post'/>
       </div>
     );
   }

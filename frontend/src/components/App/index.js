@@ -11,6 +11,7 @@ import './style.less';
 //Components
 import Category from '../Category/';
 import Main from '../Main/';
+import PostForm from '../PostForm/';
 
 
 class App extends Component {
@@ -18,7 +19,8 @@ class App extends Component {
     return (
       <div className="app">
         <Route exact path="/" component={Main} />
-        <Route path="/:category" component={Category} />
+        <Route path="/add_post" component={PostForm} />
+        <Route path="/category/:category" component={Category} />
       </div>
     );
   }

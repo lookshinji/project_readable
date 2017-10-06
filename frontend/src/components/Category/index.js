@@ -4,13 +4,21 @@
 // deve ter um controle para ordenar o método da lista, incluindo, no mínimo, ordenar por voteScore e ordenar por marcação de hora
 // deve ter um controle para adicionar novas postagens
 
+//Libs
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import './style.less';
-import { Row, Col, Button, Glyph } from 'elemental';
-import * as API from '../../API';
-import { fetchCategoryPosts, updateVoteScore } from  '../../actions.js';
 import { connect } from 'react-redux';
+
+//API
+import * as API from '../../API';
+
+//Components
+import { fetchCategoryPosts, updateVoteScore } from  '../../actions.js';
+import Header from '../Header/';
+import PostList from '../PostList/';
+
+//Style
+import { Row, Col } from 'elemental';
+import './style.less';
 
 
 class Category extends Component {
@@ -36,30 +44,17 @@ class Category extends Component {
   render() {
     const match = this.props.match;
     const { category } = match.params;
-    const { categoryPosts } = this.props;
+    const { posts } = this.props;
 
     return (
       <div className="category">
-        <div className="header">
-          <Link to="/" className="back-button"><Glyph icon="arrow-left" /></Link>
-          <h1>{category}</h1>
-        </div>
+        <Header title={category}/>
         <Row className="container">
           <Col>
             <ul className="main-posts">
-              {categoryPosts.map((post) => (
+              {posts.map((post) => (
                 <li key={post.id}>
-                  <Row className="post">
-                    <Col className="main-votes" xs='10%'>
-                      <Button type="link" onClick={() => this.handleVote(post.id, 1)}><Glyph icon="chevron-up" /></Button>
-                      <h3>{post.voteScore}</h3>
-                      <Button type="link" onClick={() => this.handleVote(post.id, -1)}><Glyph icon="chevron-down" /></Button>
-                    </Col>
-                    <Col xs='90%'>
-                      <h2>{post.title}</h2>
-                      <a href="/"><span>31</span>coments</a>
-                    </Col>
-                  </Row>
+                  <PostList post={post} handleVote={this.handleVote} />
                 </li>
               ))}
             </ul>
@@ -72,7 +67,7 @@ class Category extends Component {
 
 export default connect(state => {
   return {
-    categoryPosts: state.categoryPosts,
+    posts: state.posts,
     voteScore: state.voteScore,
   };
 }, { fetchCategoryPosts, updateVoteScore })(Category);

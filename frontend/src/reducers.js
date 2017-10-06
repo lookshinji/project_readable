@@ -8,7 +8,6 @@ import {
 function appReducer (state = {
   categories: [],
   posts: [],
-  categoryPosts:[],
 }, action) {
   switch (action.type) {
   case FETCH_CATEGORY:
@@ -24,12 +23,12 @@ function appReducer (state = {
   case FETCH_CATEGORY_POSTS:
     return {
       ...state,
-      categoryPosts: action.payload,
+      posts: action.payload,
     };
   case UPDATE_VOTE_SCORE:
     return {
       ...state,
-      categoryPosts: state.categoryPosts.map((post) => {
+      posts: state.posts.map((post) => {
         if(post.id !== action.payload.id) {
           return post;
         }
@@ -37,7 +36,7 @@ function appReducer (state = {
           ...post,
           voteScore: action.payload.voteScore
         };
-      })
+      }),
     };
   default:
     return state;
