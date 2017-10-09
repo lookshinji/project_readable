@@ -78,7 +78,7 @@ class Main extends Component {
 
 export default connect(state => {
   return {
-    categories: state.categories,
-    posts: state.posts
+    categories: state.app.categories,
+    posts: state.app.posts
   };
 }, { fetchCategories, fetchPosts, updateVoteScore })(Main);

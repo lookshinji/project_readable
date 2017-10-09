@@ -1,5 +1,6 @@
 export const FETCH_CATEGORY = 'fetch_categories';
 export const FETCH_POSTS = 'fetch_posts';
+export const FETCH_POST = 'fetch_post';
 export const FETCH_CATEGORY_POSTS = 'fetch_caregory_posts';
 export const UPDATE_VOTE_SCORE = 'update_vote_score';
 
@@ -14,6 +15,13 @@ export function fetchPosts(posts) {
   return {
     type: FETCH_POSTS,
     payload: posts
+  };
+};
+
+export function fetchPost(activepost) {
+  return {
+    type: FETCH_POST,
+    payload: activepost
   };
 };
 

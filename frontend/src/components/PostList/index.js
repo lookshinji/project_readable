@@ -15,10 +15,10 @@ import './style.less';
 const PostList = (props) => {
   const { post, handleVote } = props;
   return (
-    <Row className="post">
-      <Col className="main-votes" xs='10%'>
+    <Row className="post-header">
+      <Col className="votes" xs='10%'>
         <Button type="link" onClick={() => handleVote(props.post.id, 1)}><Glyph icon="chevron-up" /></Button>
-        <h3>{post.voteScore}</h3>
+        <h4>{post.voteScore}</h4>
         <Button type="link" onClick={() => handleVote(props.post.id, -1)}><Glyph icon="chevron-down" /></Button>
       </Col>
       <Col xs='90%'>

@@ -55,6 +55,7 @@ class Category extends Component {
               {posts.map((post) => (
                 <li key={post.id}>
                   <PostList post={post} handleVote={this.handleVote} />
+                  {console.log(post.id)}
                 </li>
               ))}
             </ul>
@@ -67,7 +68,7 @@ class Category extends Component {
 
 export default connect(state => {
   return {
-    posts: state.posts,
-    voteScore: state.voteScore,
+    posts: state.app.posts,
+    voteScore: state.app.voteScore,
   };
 }, { fetchCategoryPosts, updateVoteScore })(Category);
