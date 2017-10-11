@@ -4,12 +4,14 @@ import {
   FETCH_CATEGORY_POSTS,
   UPDATE_VOTE_SCORE,
   FETCH_POST,
+  FETCH_COMMENTS,
 } from './actions.js';
 
 function appReducer (state = {
   categories: [],
   posts: [],
   activepost:{},
+  comments: [],
 }, action) {
   switch (action.type) {
   case FETCH_CATEGORY:
@@ -26,6 +28,11 @@ function appReducer (state = {
     return {
       ...state,
       activepost: action.payload,
+    };
+  case FETCH_COMMENTS:
+    return {
+      ...state,
+      comments: action.payload,
     };
   case FETCH_CATEGORY_POSTS:
     return {
