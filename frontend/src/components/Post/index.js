@@ -14,7 +14,6 @@ import { connect } from 'react-redux';
 import * as API from '../../API';
 
 //Components
-import Header from '../Header/';
 import { fetchPost, fecthComments } from  '../../actions.js';
 
 //Style
@@ -24,20 +23,19 @@ import './style.less';
 class Post extends Component {
 
   componentDidMount(){
-    const postId = '8xf0y6ziyjabvozdd253nd';
+    const { post } = this.props.match.params;
     const { fetchPost, fecthComments } = this.props;
 
-    API.getPost(postId)
+    API.getPost(post)
       .then((post) => {
         fetchPost(post);
       });
 
-    API.getComments(postId)
+    API.getComments(post)
       .then((comments) => {
         fecthComments(comments);
       });
   };
-
 
   render() {
     const { activepost, comments } = this.props;
@@ -51,7 +49,6 @@ class Post extends Component {
 
     return (
       <div>
-        <Header title="Post" />
         <Row className="post-header">
           <Col className="votes" xs='10%'>
             <Button type="link"><Glyph icon="chevron-up" /></Button>

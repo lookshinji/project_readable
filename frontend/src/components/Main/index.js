@@ -15,7 +15,6 @@ import * as API from '../../API';
 //Components
 import { fetchCategories, fetchPosts, updateVoteScore  } from  '../../actions.js';
 import PostList from '../PostList/';
-import Header from '../Header/';
 
 //Style
 import './style.less';
@@ -50,7 +49,6 @@ class Main extends Component {
     const { categories, posts } = this.props;
     return (
       <div className="main">
-        <Header title='Readable'/>
         <Row className="container">
           <Col xs='70%'>
             <h5 className="subheader">All Posts</h5>

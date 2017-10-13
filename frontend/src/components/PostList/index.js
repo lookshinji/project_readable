@@ -1,29 +1,22 @@
-// deve mostrar os detalhes da postagem, incluindo: título, corpo, autor, marcação de hora em formato legível pelo usuário e pontuação dos votos
-// deve listar todos os comentários daquela postagem, ordenados por voteScore (começando pelo mais alto)
-// deve ter um controle para reordenar comentários por pontuação ou marcação de hora
-// deve ter controles para acionar a edição ou remoção da postagem
-// deve ter um controle para adicionar um novo comentário
-// implemente o formulário de comentários da forma que quiser (em linha, modal, etc.)
-// os comentários também devem ter controles para edição ou exclusão
-
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 //Style
 import { Row, Col, Button, Glyph } from 'elemental';
 import './style.less';
 
 const PostList = (props) => {
   const { post, handleVote } = props;
+  console.log(props.match);
   return (
     <Row className="post-header">
       <Col className="votes" xs='10%'>
-        <Button type="link" onClick={() => handleVote(props.post.id, 1)}><Glyph icon="chevron-up" /></Button>
+        <Button type="link" onClick={() => handleVote(post.id, 1)}><Glyph icon="chevron-up" /></Button>
         <h4>{post.voteScore}</h4>
-        <Button type="link" onClick={() => handleVote(props.post.id, -1)}><Glyph icon="chevron-down" /></Button>
+        <Button type="link" onClick={() => handleVote(post.id, -1)}><Glyph icon="chevron-down" /></Button>
       </Col>
       <Col xs='90%'>
-        <h2>{post.title}</h2>
-        <a href="/"><span>31</span>coments</a>
+        {console.log(post.id, post.category)}
+        <Link to={`/post/${post.id}`}><h2>{post.title}</h2></Link>
       </Col>
     </Row>
   );

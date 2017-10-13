@@ -14,10 +14,10 @@ import './style.less';
 
 
 const Header = (props) => {
-  const { title } = props;
+  const { title, history } = props;
   return (
     <div className="header">
-      <Link to="/" className="back-button"><Glyph icon="arrow-left" /></Link>
+      <a onClick={() => history.goBack()} onKeyDown={() => history.goBack()} role="link" tabIndex={0} className="back-button"><Glyph icon="arrow-left" /></a>
       <h1>{title ? title : 'Readable' }</h1>
       <Link to="/add_post" className="add-button"><Glyph icon="plus" /></Link>
     </div>

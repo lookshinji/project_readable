@@ -13,7 +13,6 @@ import * as API from '../../API';
 
 //Components
 import { fetchCategoryPosts, updateVoteScore } from  '../../actions.js';
-import Header from '../Header/';
 import PostList from '../PostList/';
 
 //Style
@@ -42,20 +41,16 @@ class Category extends Component {
   }
 
   render() {
-    const match = this.props.match;
-    const { category } = match.params;
     const { posts } = this.props;
 
     return (
       <div className="category">
-        <Header title={category}/>
         <Row className="container">
           <Col>
             <ul className="main-posts">
               {posts.map((post) => (
                 <li key={post.id}>
                   <PostList post={post} handleVote={this.handleVote} />
-                  {console.log(post.id)}
                 </li>
               ))}
             </ul>
