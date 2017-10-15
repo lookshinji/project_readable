@@ -18,10 +18,10 @@ import Header from '../Header/';
 
 class App extends Component {
   render() {
-    const {history} = this.props;
+    const { history, match, location } = this.props;
     return (
       <div className="app">
-        <Header title="Post" history={history}/>
+        <Header title="Post" history={history} match={match} location={location}/>
         <Route exact path="/" component={Main} />
         <Route path="/add_post" component={AddPost} />
         <Route path="/post/:post" component={Post} />

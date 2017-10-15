@@ -2,29 +2,44 @@
 // ao editar, os dados existentes devem ser povoados no formulário
 
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { reduxForm } from 'redux-form';
+import { Form, FormInput, FormField, FormSelect } from 'elemental';
 
 //styles
 import './style.less';
 
+// id	< Autmático
+// timestamp	< Autmático Date.now()
+// voteScore	< (default: 1)
+// deleted
+
 let PostForm = props => {
   const { handleSubmit } = props;
+
+  const categories = [
+  	{ label: 'Caramel',    value: 'caramel' },
+  	{ label: 'Chocolate',  value: 'chocolate' },
+  	{ label: 'Strawberry', value: 'strawberry' },
+  	{ label: 'Vanilla',    value: 'vanilla', disabled: true }
+  ];
+
   return (
-    <form onSubmit={ handleSubmit }>
-      <div>
-        <label htmlFor="firstName">First Name</label>
-        <Field name="firstName" component="input" type="text" />
-      </div>
-      <div>
-        <label htmlFor="lastName">Last Name</label>
-        <Field name="lastName" component="input" type="text" />
-      </div>
-      <div>
-        <label htmlFor="email">Email</label>
-        <Field name="email" component="input" type="email" />
-      </div>
-      <button type="submit">Submit</button>
-    </form>
+    <div className="form-container">
+      <Form onSubmit={ handleSubmit }>
+        <FormField width="one-half" label="Title" htmlFor="post-title">
+          <FormInput placeholder="Type a title for your post" name="post-title" />
+        </FormField>
+        <FormField label="Message" htmlFor="post-message">
+          <FormInput multiline placeholder="Type a message " name="post-message" />
+        </FormField>
+        <FormField>
+          <FormSelect options={categories} firstOption="Country" />
+        </FormField>
+        <FormField label="Name" htmlFor="post-author">
+          <FormInput placeholder="Type in your name" name="post-author" />
+        </FormField>
+      </Form>
+    </div>
   );
 };
 
