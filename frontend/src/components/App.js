@@ -8,20 +8,19 @@ import React from 'react';
 import { Route, withRouter } from 'react-router-dom';
 
 //Components
-import Category from '../containers/Category';
 import Main from '../containers/Main';
 import AddPost from './AddPost';
 import Post from '../containers/Post';
 import Header from '../containers/Header';
 
 
-const App = ({ history, match, location }) => (
+const App = ({ history, location }) => (
   <div className="app">
-    <Header title="Post" history={history} match={match} location={location}/>
+    <Header title="Post" history={history} location={location} />
     <Route exact path="/" component={Main} />
-    <Route path="/add_post" component={AddPost} />
-    <Route path="/post/:post" component={Post} />
-    <Route path="/category/:category" component={Category} />
+    <Route exact path="/:category" component={Main} />
+    <Route exact path="/add_post/form" component={AddPost} />
+    <Route exact path="/post/:post" component={Post} />
   </div>
 );
 

@@ -50,8 +50,6 @@ a {
   }
 
   .back-button, .add-button {
-    // flex-grow: 1;
-
     i {
       font-size: 30px;
     }
@@ -65,6 +63,7 @@ a {
 .form-container {
   margin: 0 auto;
   padding: 30px;
+  min-width: 400px;
   max-width: 50%;
 }
 .subheader{
@@ -77,7 +76,18 @@ a {
   margin-top: 25px;
 
   li {
-    padding-bottom: 10px;
+    width: 100%;
+    padding-bottom: 5px;
+  }
+
+  a {
+    display: inline-block;
+    padding: 5px;
+  }
+
+  &--selected {
+    background-color: @grey-15;
+    width: 100%;
   }
 }
 
@@ -114,8 +124,7 @@ a {
   padding: 30px;
 
   .comment {
-    padding-bottom: 25px;
-    margin: 20px 0;
+    padding-bottom: 20px;
     margin-bottom: 4px;
     border-bottom: 1px solid @grey-05;
   }
@@ -130,17 +139,6 @@ a {
     padding: 0 30px;
   }
 
-}
-
-.category .header {
-  justify-content: space-between;
-
-  h1 {
-    font-weight: bold;
-    text-transform: uppercase;
-    margin: 0;
-    // flex-grow: 1;
-  }
 }
 
 .back-button, .add-button {

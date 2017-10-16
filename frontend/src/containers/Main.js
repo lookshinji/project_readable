@@ -6,14 +6,14 @@
 
 //Libs
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 //API
 import * as API from '../API';
 
 //Components
-import { fetchCategories, fetchPosts, updateVoteScore  } from  '../actions';
+import { fetchCategories, fetchCategoryPosts, fetchPosts, updateVoteScore  } from  '../actions';
 import PostList from '../components/PostList';
 
 //Style
@@ -22,17 +22,44 @@ import { Row, Col } from 'elemental';
 class Main extends Component {
 
   componentDidMount(){
-    const { fetchCategories, fetchPosts } = this.props;
+    const { fetchCategories, fetchPosts, fetchCategoryPosts } = this.props;
+    const { category } = this.props.match.params;
 
     API.getCategories()
       .then((categories) => {
         fetchCategories(categories);
       });
 
-    API.getAllPosts()
-      .then((posts) => {
-        fetchPosts(posts);
-      });
+    if (category === undefined ) {
+      API.getAllPosts()
+        .then((posts) => {
+          fetchPosts(posts);
+        });
+    } else {
+      API.getCategoryPost(category)
+        .then((categoryPosts) => {
+          fetchCategoryPosts(categoryPosts);
+        });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    if (prevProps.match.params !== this.props.match.params) {
+      const { category } = this.props.match.params;
+      const { fetchCategoryPosts } = this.props;
+
+      if (category === undefined ) {
+        API.getAllPosts()
+          .then((posts) => {
+            fetchPosts(posts);
+          });
+      } else {
+        API.getCategoryPost(category)
+          .then((categoryPosts) => {
+            fetchCategoryPosts(categoryPosts);
+          });
+      }
+    }
   }
 
   handleVote = (id, vote) => {
@@ -45,12 +72,13 @@ class Main extends Component {
   }
 
   render() {
-    const { categories, posts } = this.props;
+    const { categories, posts, match } = this.props;
+    const categoryName = match.params.category;
     return (
       <div className="main">
         <Row className="container">
           <Col xs='70%'>
-            <h5 className="subheader">All Posts</h5>
+            <h5 className="subheader">{ categoryName ? `Category: ${categoryName}` : 'All Posts'}</h5>
             <ul className="main-posts">
               <PostList posts={posts} handleVote={this.handleVote} />
             </ul>
@@ -59,7 +87,7 @@ class Main extends Component {
             <h5 className="subheader">Categories</h5>
             <ol className='main-categories'>
               {categories.map((category) => (
-                <li key={category.name}><Link to={`category/${category.path}`}>{category.name}</Link></li>
+                <li key={category.name}><NavLink activeClassName="main-categories--selected" to={`/${category.path}`}>{category.name}</NavLink></li>
               ))}
             </ol>
           </Col>
@@ -74,4 +102,4 @@ export default connect(state => {
     categories: state.app.categories,
     posts: state.app.posts
   };
-}, { fetchCategories, fetchPosts, updateVoteScore })(Main);
+}, { fetchCategories, fetchCategoryPosts, fetchPosts, updateVoteScore })(Main);

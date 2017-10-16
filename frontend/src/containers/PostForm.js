@@ -10,7 +10,13 @@ import { Form, FormInput, FormField, FormSelect } from 'elemental';
 // voteScore	< (default: 1)
 // deleted
 
+
 let PostForm = props => {
+
+  const handleChange = () => {
+    return 'hello';
+  };
+
   const { handleSubmit } = props;
 
   const categories = [
@@ -23,14 +29,14 @@ let PostForm = props => {
   return (
     <div className="form-container">
       <Form onSubmit={ handleSubmit }>
-        <FormField width="one-half" label="Title" htmlFor="post-title">
+        <FormField label="Title" htmlFor="post-title">
           <FormInput placeholder="Type a title for your post" name="post-title" />
         </FormField>
         <FormField label="Message" htmlFor="post-message">
           <FormInput multiline placeholder="Type a message " name="post-message" />
         </FormField>
         <FormField>
-          <FormSelect options={categories} firstOption="Country" />
+          <FormSelect options={categories} firstOption="Country" onChange={handleChange} />
         </FormField>
         <FormField label="Name" htmlFor="post-author">
           <FormInput placeholder="Type in your name" name="post-author" />

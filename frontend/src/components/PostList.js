@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 //Style
 import { Row, Col, Button, Glyph } from 'elemental';
 
-const PostList = (props) => {
-  const { posts, handleVote } = props;
+const PostList = ({ posts, handleVote }) => {
   return (
     <ul className="main-posts">
       {posts.map((post) => (
