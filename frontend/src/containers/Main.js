@@ -10,14 +10,13 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 //API
-import * as API from '../../API';
+import * as API from '../API';
 
 //Components
-import { fetchCategories, fetchPosts, updateVoteScore  } from  '../../actions.js';
-import PostList from '../PostList/';
+import { fetchCategories, fetchPosts, updateVoteScore  } from  '../actions';
+import PostList from '../components/PostList';
 
 //Style
-import './style.less';
 import { Row, Col } from 'elemental';
 
 class Main extends Component {
@@ -53,11 +52,7 @@ class Main extends Component {
           <Col xs='70%'>
             <h5 className="subheader">All Posts</h5>
             <ul className="main-posts">
-              {posts.map((post) => (
-                <li key={post.id}>
-                  <PostList post={post} handleVote={this.handleVote} />
-                </li>
-              ))}
+              <PostList posts={posts} handleVote={this.handleVote} />
             </ul>
           </Col>
           <Col xs='30%'>

@@ -5,9 +5,6 @@ import React from 'react';
 import { reduxForm } from 'redux-form';
 import { Form, FormInput, FormField, FormSelect } from 'elemental';
 
-//styles
-import './style.less';
-
 // id	< Autmático
 // timestamp	< Autmático Date.now()
 // voteScore	< (default: 1)

@@ -9,16 +9,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 //API
-import * as API from '../../API';
+import * as API from '../API';
 
 //Components
-import { fetchCategoryPosts, updateVoteScore } from  '../../actions.js';
-import PostList from '../PostList/';
+import { fetchCategoryPosts, updateVoteScore } from  '../actions';
+import PostList from '../components/PostList';
 
 //Style
 import { Row, Col } from 'elemental';
-import './style.less';
-
 
 class Category extends Component {
   componentDidMount(){
@@ -48,13 +46,7 @@ class Category extends Component {
       <div className="category">
         <Row className="container">
           <Col>
-            <ul className="main-posts">
-              {posts.map((post) => (
-                <li key={post.id}>
-                  <PostList post={post} handleVote={this.handleVote} />
-                </li>
-              ))}
-            </ul>
+            <PostList posts={posts} handleVote={this.handleVote} />
           </Col>
         </Row>
       </div>

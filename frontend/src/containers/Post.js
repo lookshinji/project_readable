@@ -11,14 +11,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 //API
-import * as API from '../../API';
+import * as API from '../API';
 
 //Components
-import { fetchPost, fecthComments } from  '../../actions.js';
+import { fetchPost, fecthComments, updateVoteScore } from  '../actions.js';
 
 //Style
 import { Row, Col, Button, Glyph} from 'elemental';
-import './style.less';
 
 class Post extends Component {
 
@@ -37,6 +36,15 @@ class Post extends Component {
       });
   };
 
+  handleVote = (id, vote) => {
+    const { updateVoteScore } = this.props;
+
+    API.updateVoteScore(id, vote)
+      .then((post) => {
+        updateVoteScore(id, post.voteScore);
+      });
+  }
+
   render() {
     const { activepost, comments } = this.props;
 
@@ -46,14 +54,13 @@ class Post extends Component {
       return `em ${date} às ${time}`;
     };
 
-
     return (
       <div>
         <Row className="post-header">
           <Col className="votes" xs='10%'>
-            <Button type="link"><Glyph icon="chevron-up" /></Button>
+            <Button type="link" onClick={() => this.handleVote(activepost.id, 1)}><Glyph icon="chevron-up" /></Button>
             <h4>{activepost.voteScore}</h4>
-            <Button type="link"><Glyph icon="chevron-down" /></Button>
+            <Button type="link" onClick={() => this.handleVote(activepost.id, -1)}><Glyph icon="chevron-down" /></Button>
           </Col>
           <Col xs='90%'>
             <h2>{activepost.title}</h2>
@@ -95,4 +102,4 @@ export default connect(state => {
     activepost: state.app.activepost,
     comments: state.app.comments
   };
-}, { fetchPost, fecthComments })(Post);
+}, { fetchPost, fecthComments, updateVoteScore })(Post);

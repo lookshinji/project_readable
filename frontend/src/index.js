@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 
 //Components
 import appReducer from './reducers';
-import App from './components/App';
+import App from './components/App.js';
 
 //CSS
 import './styles/main.less';

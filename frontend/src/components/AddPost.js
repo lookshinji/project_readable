@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 
-//Components
-import PostForm from '../PostForm/';
-
-//styles
-import './style.less';
+//Containers
+import PostForm from '../containers/PostForm';
 
 class AddPost extends Component{
   submit = (values) => {
