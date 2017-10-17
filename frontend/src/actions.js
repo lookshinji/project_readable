@@ -4,6 +4,7 @@ export const FETCH_POST = 'fetch_post';
 export const FETCH_COMMENTS = 'fetch_comments';
 export const FETCH_CATEGORY_POSTS = 'fetch_caregory_posts';
 export const UPDATE_VOTE_SCORE = 'update_vote_score';
+export const SORT_POSTS = 'sort_posts';
 
 export function fetchCategories(categories) {
   return {
@@ -40,12 +41,21 @@ export function fetchCategoryPosts(categoryPosts) {
   };
 };
 
-export function updateVoteScore(id, voteScore) {
+export function updateVoteScore(id, type, voteScore) {
+  console.log(id, type, voteScore);
   return {
     type: UPDATE_VOTE_SCORE,
     payload: {
       id,
+      type,
       voteScore,
     }
+  };
+};
+
+export function sortPosts(sortBy) {
+  return {
+    type: SORT_POSTS,
+    payload: sortBy
   };
 };

@@ -1,24 +1,15 @@
-// deve ter um formulário para criar novas postagens ou editar as existentes
-// ao editar, os dados existentes devem ser povoados no formulário
-
+//Libs
 import React from 'react';
 import { reduxForm } from 'redux-form';
 import { Form, FormInput, FormField, FormSelect } from 'elemental';
 
-// id	< Autmático
-// timestamp	< Autmático Date.now()
-// voteScore	< (default: 1)
-// deleted
-
-
 let PostForm = props => {
-
   const handleChange = () => {
     return 'hello';
   };
 
   const { handleSubmit } = props;
-
+  
   const categories = [
   	{ label: 'Caramel',    value: 'caramel' },
   	{ label: 'Chocolate',  value: 'chocolate' },

@@ -1,14 +1,7 @@
-// deve ter um formulário para criar novas postagens ou editar as existentes
-// ao editar, os dados existentes devem ser povoados no formulário
-
+//Libs
 import React from 'react';
 import { reduxForm } from 'redux-form';
 import { Form, FormInput, FormField } from 'elemental';
-
-// id	< Autmático
-// timestamp	< Autmático Date.now()
-// voteScore	< (default: 1)
-// deleted
 
 let CommentForm = props => {
   const { handleSubmit } = props;

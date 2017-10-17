@@ -28,8 +28,8 @@ export const getComments = (postId) =>
   fetch(`${api}/posts/${postId}/comments`, { headers })
     .then(res => res.json());
 
-export const updateVoteScore = (id, vote) =>{
-  return fetch(`${api}/posts/${id}`, {
+export const updateVoteScore = (id, type, vote) =>{
+  return fetch(`${api}/${type}/${id}`, {
     method: 'POST',
     headers,
     body: JSON.stringify({ option: vote === 1 ? 'upVote' : 'downVote' })

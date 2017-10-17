@@ -7,8 +7,8 @@ import { reducer as formReducer } from 'redux-form';
 import { Provider } from 'react-redux';
 
 //Components
-import appReducer from './reducers';
-import App from './components/App.js';
+import appReducer from './reducers/appReducer';
+import App from './containers/App.js';
 
 //CSS
 import './styles/main.less';
