@@ -6,7 +6,7 @@
 
 //Libs
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 //API
@@ -78,13 +78,22 @@ class Main extends Component {
       <div className="main">
         <Row className="container">
           <Col xs='70%'>
-            <h5 className="subheader">{ categoryName ? `Category: ${categoryName}` : 'All Posts'}</h5>
+            <div className="subheader">
+              <h4>{ categoryName ? `Category: ${categoryName}` : 'All Posts'}</h4>
+              <ul>
+                <li><h5>sort by:</h5></li>
+                <li><Link to="#">date</Link></li>
+                <li><Link to="#">vote</Link></li>
+              </ul>
+            </div>
             <ul className="main-posts">
               <PostList posts={posts} handleVote={this.handleVote} />
             </ul>
           </Col>
           <Col xs='30%'>
-            <h5 className="subheader">Categories</h5>
+            <div className="subheader">
+              <h4>Categories</h4>
+            </div>
             <ol className='main-categories'>
               {categories.map((category) => (
                 <li key={category.name}><NavLink activeClassName="main-categories--selected" to={`/${category.path}`}>{category.name}</NavLink></li>

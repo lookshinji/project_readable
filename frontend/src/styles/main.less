@@ -64,12 +64,25 @@ a {
   margin: 0 auto;
   padding: 30px;
   min-width: 400px;
-  max-width: 50%;
+  max-width: 60%;
 }
 .subheader{
-  padding-bottom: 5px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-bottom: 3px;
   margin-bottom: 30px;
   border-bottom: 1px solid @blue;
+  line-height: 0;
+
+  ul {
+    display: flex;
+    align-items: baseline;
+  }
+
+  li {
+    padding: 0 3px;
+  }
 }
 
 .main-categories {
