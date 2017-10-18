@@ -1,20 +1,15 @@
 //Libs
 import React from 'react';
-import { reduxForm } from 'redux-form';
-import { Form, FormInput, FormField } from 'elemental';
+import { Field, reduxForm } from 'redux-form';
+import { Button } from 'elemental';
 
 let CommentForm = props => {
-  const { handleSubmit } = props;
-
   return (
-    <Form onSubmit={ handleSubmit }>
-      <FormField label="Comment" htmlFor="post-message">
-        <FormInput multiline placeholder="Type a comment " name="post-message" />
-      </FormField>
-      <FormField label="Name" htmlFor="post-author">
-        <FormInput placeholder="Type in your name" name="post-author" />
-      </FormField>
-    </Form>
+    <form className="comment_form">
+      <Field component="textarea" placeholder="write a comment" name="comment-message" rows="8"/>
+      <Field component="input" placeholder="your name" name="comment-author" />
+      <Button>Send</Button>
+    </form>
   );
 };
 

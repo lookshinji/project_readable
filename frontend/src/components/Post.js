@@ -10,19 +10,22 @@ const Post = ({ post, date, handleVote, details }) => {
   return (
     <div className="post">
       <div className="post_header">
-        <Votes item={post} type='posts' handleVote={handleVote} / >
+        <Votes item={post} type={details ? 'activepost' : 'posts'} handleVote={handleVote} / >
         <div>
           { details ?
             <h2>{post.title}</h2> :
             <Link to={{pathname: `/${post.category}/${post.id}`, state: {fromPost: true}}}><h2>{post.title}</h2></Link>
           }
           <ul className="post_details">
-            <li>Created <span>{date(post.timestamp)}</span></li>
-            <li>Author: <span> {post.author}</span> </li>
-            <li>Category: {post.category}</li>
+            <li><Glyph icon="calendar" /><span>{date(post.timestamp)}</span></li>
+            <li><Glyph icon="person" /> <span> {post.author}</span> </li>
             <li><a><Glyph icon="pencil" /></a></li>
             <li><a><Glyph icon="trashcan" /></a></li>
           </ul>
+          { details ?
+            null :
+            <a>31 comments</a>
+          }
         </div>
       </div>
       { details ?

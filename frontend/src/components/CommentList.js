@@ -3,33 +3,33 @@ import React from 'react';
 //Containers
 import CommentForm from '../containers/CommentForm';
 //Style
-import { Row, Col, Glyph } from 'elemental';
+import { Glyph } from 'elemental';
 //Components
 import Votes from './Votes';
 
 const CommentList = ({ comments, date, handleVote }) => {
   return (
-    <div className="container">
-      <h3>Comentários</h3>
+    <div className="comment container">
+      <h3>Comments ({comments.length})</h3>
       <ul className="comment_list">
         {comments.map((comment) => (
           <li key={comment.id}>
-            <Row className="comment_header">
+            <div className="comment_header">
               <Votes item={comment} type='comments' handleVote={handleVote} />
-              <Col xs='90%'>
+              <div>
                 <p className="comment_body">{comment.body}</p>
                 <ul className="comment_details">
-                  <li>Created <span>{date(comment.timestamp)}</span></li>
-                  <li>Author: <span> {comment.author}</span> </li>
+                  <li><Glyph icon="calendar" /> <span>{date(comment.timestamp)}</span></li>
+                  <li><Glyph icon="person" /> <span> {comment.author}</span> </li>
                   <li><a><Glyph icon="pencil" /></a></li>
                   <li><a><Glyph icon="trashcan" /></a></li>
                 </ul>
-              </Col>
-            </Row>
+              </div>
+            </div>
           </li>
         ))}
       </ul>
-      <h3>Your Comment</h3>
+      <h3>Add a comment</h3>
       <CommentForm />
     </div>
   );

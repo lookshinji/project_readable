@@ -16,10 +16,20 @@ import { updateVoteScore } from  '../actions';
 class App extends Component {
   handleVote = (id, type, vote) => {
     const { updateVoteScore } = this.props;
-
-    API.updateVoteScore(id, type, vote)
+    let apiType = '';
+    switch (type) {
+    case 'posts':
+    case 'activepost':
+      apiType = 'posts';
+      break;
+    case 'comments':
+      apiType = 'comments';
+      break;
+    default:
+      return console.log('apiType required');
+    }
+    API.updateVoteScore(id, apiType, vote)
       .then((post) => {
-        console.log(post);
         updateVoteScore(id, type, post.voteScore);
       });
   }
@@ -35,7 +45,7 @@ class App extends Component {
         <Route exact path="/:category" render={(props) => (
           <Main {...props} handleVote={this.handleVote} />
         )}/>
-        <Route exact path="/add_post/form" component={AddPost} />
+        <Route path="/add_post/form/add" component={AddPost} />
         <Route exact path="/:category/:post" render={(props) => (
           <PostDetails {...props} handleVote={this.handleVote} />
         )}/>

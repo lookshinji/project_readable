@@ -1,38 +1,25 @@
 //Libs
 import React from 'react';
-import { reduxForm } from 'redux-form';
-import { Form, FormInput, FormField, FormSelect } from 'elemental';
+import { connect } from 'react-redux';
+import { Field, reduxForm } from 'redux-form';
+import { Button } from 'elemental';
 
-let PostForm = props => {
-  const handleChange = () => {
-    return 'hello';
-  };
-
-  const { handleSubmit } = props;
-  
-  const categories = [
-  	{ label: 'Caramel',    value: 'caramel' },
-  	{ label: 'Chocolate',  value: 'chocolate' },
-  	{ label: 'Strawberry', value: 'strawberry' },
-  	{ label: 'Vanilla',    value: 'vanilla', disabled: true }
-  ];
-
+let PostForm = ({categories}) => {
   return (
-    <div className="form-container">
-      <Form onSubmit={ handleSubmit }>
-        <FormField label="Title" htmlFor="post-title">
-          <FormInput placeholder="Type a title for your post" name="post-title" />
-        </FormField>
-        <FormField label="Message" htmlFor="post-message">
-          <FormInput multiline placeholder="Type a message " name="post-message" />
-        </FormField>
-        <FormField>
-          <FormSelect options={categories} firstOption="Country" onChange={handleChange} />
-        </FormField>
-        <FormField label="Name" htmlFor="post-author">
-          <FormInput placeholder="Type in your name" name="post-author" />
-        </FormField>
-      </Form>
+    <div className="add_post_form">
+      <h2>Add a post</h2>
+      <form>
+        <Field component="input" placeholder="Name" name="post-author" />
+        <Field component="select" placeholder="Category" name="post-category">
+          <option selected >Category</option>
+          {categories.map((category) => (
+            <option key={category.name}>{category.name}</option>
+          ))}
+        </Field>
+        <Field component="input" placeholder="Post Title" name="post-title" />
+        <Field component="textarea" placeholder="Type a message" name="post-message" rows="8"/>
+        <Button>Send</Button>
+      </form>
     </div>
   );
 };
@@ -42,4 +29,8 @@ PostForm = reduxForm({
   form: 'post'
 })(PostForm);
 
-export default PostForm;
+export default connect(state => {
+  return {
+    categories: state.app.categories,
+  };
+}, { })(PostForm);

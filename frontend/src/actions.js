@@ -42,7 +42,6 @@ export function fetchCategoryPosts(categoryPosts) {
 };
 
 export function updateVoteScore(id, type, voteScore) {
-  console.log(id, type, voteScore);
   return {
     type: UPDATE_VOTE_SCORE,
     payload: {

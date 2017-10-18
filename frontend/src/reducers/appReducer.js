@@ -13,6 +13,7 @@ function appReducer (state = {
   posts: [],
   activepost:{},
   comments: [],
+  commentCount: [],
 }, action) {
   switch (action.type) {
   case FETCH_CATEGORY:
@@ -44,7 +45,6 @@ function appReducer (state = {
       posts: action.payload,
     };
   case UPDATE_VOTE_SCORE:
-    console.log(action.payload.type);
     switch (action.payload.type) {
     case 'posts':
       return {
@@ -58,6 +58,14 @@ function appReducer (state = {
             voteScore: action.payload.voteScore
           };
         }),
+      };
+    case 'activepost':
+      return {
+        ...state,
+        activepost: {
+          ...state.activepost,
+          voteScore: action.payload.voteScore
+        }
       };
     case 'comments':
       return {
@@ -97,7 +105,6 @@ function appReducer (state = {
   default:
     return state;
   }
-
 }
 
 export default appReducer;

@@ -62,8 +62,8 @@ class Main extends Component {
     const { categories, posts, match, sortPosts, handleVote} = this.props;
     const categoryName = match.params.category;
     return (
-      <div className="main">
-        <Row className="container">
+      <div className="container">
+        <Row className="main">
           <Col xs='70%'>
             <div className="main--title">
               <h4>{ categoryName ? `Category: ${categoryName.replace(/[^A-Z0-9]+/ig, ' ')}` : 'All Posts'}</h4>
