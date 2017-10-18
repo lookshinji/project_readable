@@ -59,22 +59,22 @@ function appReducer (state = {
           };
         }),
       };
-
+    case 'comments':
+      return {
+        ...state,
+        comments: state.comments.map((comment) => {
+          if(comment.id !== action.payload.id) {
+            return comment;
+          }
+          return {
+            ...comment,
+            voteScore: action.payload.voteScore
+          };
+        }),
+      };
     default:
       return console.log('type required');
     }
-    // return {
-    //   ...state,
-    //   posts: state.posts.map((post) => {
-    //     if(post.id !== action.payload.id) {
-    //       return post;
-    //     }
-    //     return {
-    //       ...post,
-    //       voteScore: action.payload.voteScore
-    //     };
-    //   }),
-    // };
   case SORT_POSTS:
     switch (action.payload) {
     case 'BY_VOTE':
