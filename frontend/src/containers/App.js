@@ -32,7 +32,9 @@ class App extends Component {
         <Route exact path="/" render={(props) => (
           <Main {...props} handleVote={this.handleVote} />
         )}/>
-        <Route exact path="/:category" component={Main} />
+        <Route exact path="/:category" render={(props) => (
+          <Main {...props} handleVote={this.handleVote} />
+        )}/>
         <Route exact path="/add_post/form" component={AddPost} />
         <Route exact path="/:category/:post" render={(props) => (
           <PostDetails {...props} handleVote={this.handleVote} />

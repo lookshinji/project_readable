@@ -41,10 +41,9 @@ class Main extends Component {
   }
 
   componentDidUpdate(prevProps, prevState){
-    if (prevProps.match.params !== this.props.match.params) {
-      const { category } = this.props.match.params;
-      const { fetchCategoryPosts } = this.props;
-
+    const { category } = this.props.match.params;
+    const { fetchCategoryPosts } = this.props;
+    if (prevProps.match.params.category !== category) {
       if (category === undefined ) {
         API.getAllPosts()
           .then((posts) => {
