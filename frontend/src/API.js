@@ -1,3 +1,4 @@
+import { generateUUID } from './helpers.js';
 
 const api = 'http://localhost:3001';
 
@@ -33,5 +34,26 @@ export const updateVoteScore = (id, type, vote) =>{
     method: 'POST',
     headers,
     body: JSON.stringify({ option: vote === 1 ? 'upVote' : 'downVote' })
+  }).then(res => res.json());
+};
+
+export const addComment = (postID, values) => {
+  return fetch(`${api}/comments`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({
+      id: generateUUID(),
+      timestamp: Date.now(),
+      body: values.commentMessage,
+      author: values.commentAuthor,
+      parentId: postID,
+    })
+  }).then(res => res.json());
+};
+
+export const deleteComment = (commentId) => {
+  return fetch(`${api}/comments/${commentId}`, {
+    method: 'DELETE',
+    headers,
   }).then(res => res.json());
 };

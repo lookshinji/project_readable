@@ -8,7 +8,7 @@ import { normalizedDate } from '../helpers.js';
 import CommentList from '../components/CommentList';
 import Post from '../components/Post';
 //Actions
-import { fetchPost, fecthComments } from  '../actions.js';
+import { fetchPost, fecthComments, deleteComment } from  '../actions.js';
 
 class PostDetails extends Component {
 
@@ -27,12 +27,22 @@ class PostDetails extends Component {
       });
   };
 
+  onDeleteComment = (commentId) => {
+    const { deleteComment } = this.props;
+    API.deleteComment(commentId);
+    deleteComment(commentId);
+  }
+
   render() {
     const { activepost, comments, handleVote } = this.props;
     return (
       <div className="post-details container">
         <Post date={normalizedDate} post={activepost} handleVote={handleVote} details/>
-        <CommentList date={normalizedDate} comments={comments} handleVote={handleVote} />
+        <CommentList
+          date={normalizedDate}
+          comments={comments}
+          handleVote={handleVote}
+          handleDelete={this.onDeleteComment} />
       </div>
     );
   }
@@ -43,4 +53,4 @@ export default connect(state => {
     activepost: state.app.activepost,
     comments: state.app.comments
   };
-}, { fetchPost, fecthComments })(PostDetails);
+}, { fetchPost, fecthComments, deleteComment })(PostDetails);

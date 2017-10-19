@@ -1,6 +1,6 @@
 //Libs
 import React, { Component } from 'react';
-import { Route, withRouter } from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 //Helpers
 import * as API from '../API';
@@ -42,11 +42,13 @@ class App extends Component {
         <Route exact path="/" render={(props) => (
           <Main {...props} handleVote={this.handleVote} />
         )}/>
-        <Route exact path="/:category" render={(props) => (
-          <Main {...props} handleVote={this.handleVote} />
-        )}/>
-        <Route path="/add_post/form/add" component={AddPost} />
-        <Route exact path="/:category/:post" render={(props) => (
+        <Switch>
+          <Route path="/add_post" component={AddPost} />
+          <Route exact path="/:category" render={(props) => (
+            <Main {...props} handleVote={this.handleVote} />
+          )}/>
+        </Switch>
+        <Route path="/:category/:post" render={(props) => (
           <PostDetails {...props} handleVote={this.handleVote} />
         )}/>
       </div>

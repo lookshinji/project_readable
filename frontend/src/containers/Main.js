@@ -17,7 +17,6 @@ import {
   sortPosts } from  '../actions';
 
 class Main extends Component {
-
   componentDidMount(){
     const { fetchCategories, fetchPosts, fetchCategoryPosts } = this.props;
     const { category } = this.props.match.params;

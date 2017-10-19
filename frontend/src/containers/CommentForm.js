@@ -1,21 +1,42 @@
 //Libs
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Button } from 'elemental';
+//Api
+import * as API from '../API';
+//Actions
+import { updateComments } from '../actions';
 
-let CommentForm = props => {
-  return (
-    <form className="comment_form">
-      <Field component="textarea" placeholder="write a comment" name="comment-message" rows="8"/>
-      <Field component="input" placeholder="your name" name="comment-author" />
-      <Button>Send</Button>
-    </form>
-  );
+class CommentForm extends Component {
+  submit = (values) => {
+    const { activepost, updateComments } = this.props;
+    API.addComment(activepost.id, values)
+      .then((comment) => {
+        updateComments(comment);
+      });
+  }
+
+  render() {
+    const { handleSubmit } = this.props;
+    return (
+      <form className="comment_form" onSubmit={handleSubmit(this.submit)}>
+        <Field component="textarea" placeholder="write a comment" name="commentMessage" rows="8"/>
+        <Field component="input" placeholder="your name" name="commentAuthor" />
+        <Button submit>Send</Button>
+      </form>
+    );
+  }
 };
 
 CommentForm = reduxForm({
-  // a unique name for the form
   form: 'comment'
 })(CommentForm);
+
+CommentForm = connect(state => {
+  return {
+    activepost: state.app.activepost
+  };
+}, { updateComments })(CommentForm);
 
 export default CommentForm;

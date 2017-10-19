@@ -3,11 +3,11 @@ import React from 'react';
 //Containers
 import CommentForm from '../containers/CommentForm';
 //Style
-import { Glyph } from 'elemental';
+import { Button, Glyph } from 'elemental';
 //Components
 import Votes from './Votes';
 
-const CommentList = ({ comments, date, handleVote }) => {
+const CommentList = ({ comments, date, handleVote, handleDelete }) => {
   return (
     <div className="comment container">
       <h3>Comments ({comments.length})</h3>
@@ -21,8 +21,8 @@ const CommentList = ({ comments, date, handleVote }) => {
                 <ul className="comment_details">
                   <li><Glyph icon="calendar" /> <span>{date(comment.timestamp)}</span></li>
                   <li><Glyph icon="person" /> <span> {comment.author}</span> </li>
-                  <li><a><Glyph icon="pencil" /></a></li>
-                  <li><a><Glyph icon="trashcan" /></a></li>
+                  <li><Button type="link"><Glyph icon="pencil" /></Button></li>
+                  <li><Button type="link" onClick={() => handleDelete(comment.id)}><Glyph icon="trashcan"/></Button></li>
                 </ul>
               </div>
             </div>

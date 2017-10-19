@@ -6,6 +6,8 @@ import {
   FETCH_POST,
   FETCH_COMMENTS,
   SORT_POSTS,
+  UPDATE_COMMENTS,
+  DELETE_COMMENT,
 } from '../actions.js';
 
 function appReducer (state = {
@@ -13,7 +15,6 @@ function appReducer (state = {
   posts: [],
   activepost:{},
   comments: [],
-  commentCount: [],
 }, action) {
   switch (action.type) {
   case FETCH_CATEGORY:
@@ -44,6 +45,21 @@ function appReducer (state = {
       ...state,
       posts: action.payload,
     };
+
+  case DELETE_COMMENT:
+    return {
+      ...state,
+      comments: state.comments.filter(comment => {
+        return comment.id !== action.payload;
+      }),
+    };
+
+  case UPDATE_COMMENTS:
+    return {
+      ...state,
+      comments: [...state.comments, action.payload]
+    };
+
   case UPDATE_VOTE_SCORE:
     switch (action.payload.type) {
     case 'posts':

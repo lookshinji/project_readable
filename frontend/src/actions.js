@@ -5,6 +5,8 @@ export const FETCH_COMMENTS = 'fetch_comments';
 export const FETCH_CATEGORY_POSTS = 'fetch_caregory_posts';
 export const UPDATE_VOTE_SCORE = 'update_vote_score';
 export const SORT_POSTS = 'sort_posts';
+export const UPDATE_COMMENTS = 'update_comments';
+export const DELETE_COMMENT = 'delete_comment';
 
 export function fetchCategories(categories) {
   return {
@@ -51,6 +53,20 @@ export function updateVoteScore(id, type, voteScore) {
     }
   };
 };
+
+export function updateComments(comment){
+  return {
+    type: UPDATE_COMMENTS,
+    payload: comment
+  };
+}
+
+export function deleteComment(commentId){
+  return {
+    type: DELETE_COMMENT,
+    payload: commentId
+  };
+}
 
 export function sortPosts(sortBy) {
   return {
