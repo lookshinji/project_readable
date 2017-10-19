@@ -37,6 +37,29 @@ export const updateVoteScore = (id, type, vote) =>{
   }).then(res => res.json());
 };
 
+export const addPost = (values) => {
+  return fetch(`${api}/posts`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({
+      id: generateUUID(),
+      timestamp: Date.now(),
+      title: values.postTitle,
+      body: values.postMessage,
+      author: values.postAuthor,
+      category: values.postCategory,
+    })
+  }).then(res => res.json());
+};
+
+export const deletePost = (postId) => {
+  return fetch(`${api}/posts/${postId}`, {
+    method: 'DELETE',
+    headers,
+  }).then(res => res.json());
+};
+
+
 export const addComment = (postID, values) => {
   return fetch(`${api}/comments`, {
     method: 'POST',

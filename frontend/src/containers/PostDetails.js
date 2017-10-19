@@ -34,10 +34,10 @@ class PostDetails extends Component {
   }
 
   render() {
-    const { activepost, comments, handleVote } = this.props;
+    const { activepost, comments, handleVote, handleDeletePost } = this.props;
     return (
       <div className="post-details container">
-        <Post date={normalizedDate} post={activepost} handleVote={handleVote} details/>
+        <Post date={normalizedDate} post={activepost} handleVote={handleVote} handleDeletePost={handleDeletePost} details/>
         <CommentList
           date={normalizedDate}
           comments={comments}

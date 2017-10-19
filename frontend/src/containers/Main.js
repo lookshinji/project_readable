@@ -58,7 +58,7 @@ class Main extends Component {
   }
 
   render() {
-    const { categories, posts, match, sortPosts, handleVote} = this.props;
+    const { categories, posts, match, sortPosts, handleVote, handleDeletePost} = this.props;
     const categoryName = match.params.category;
     return (
       <div className="container">
@@ -73,7 +73,7 @@ class Main extends Component {
               </ul>
             </div>
             <ul className="main-posts">
-              <PostList posts={posts} handleVote={handleVote} />
+              <PostList posts={posts} handleVote={handleVote} handleDeletePost={handleDeletePost} />
             </ul>
           </Col>
           <Col xs='30%'>

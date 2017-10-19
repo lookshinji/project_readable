@@ -9,7 +9,7 @@ import * as API from '../API';
 import { updateComments } from '../actions';
 
 class CommentForm extends Component {
-  submit = (values) => {
+  submitComment = (values) => {
     const { activepost, updateComments } = this.props;
     API.addComment(activepost.id, values)
       .then((comment) => {
@@ -20,7 +20,7 @@ class CommentForm extends Component {
   render() {
     const { handleSubmit } = this.props;
     return (
-      <form className="comment_form" onSubmit={handleSubmit(this.submit)}>
+      <form className="comment_form" onSubmit={handleSubmit(this.submitComment)}>
         <Field component="textarea" placeholder="write a comment" name="commentMessage" rows="8"/>
         <Field component="input" placeholder="your name" name="commentAuthor" />
         <Button submit>Send</Button>

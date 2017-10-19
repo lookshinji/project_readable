@@ -11,7 +11,7 @@ import Main from '../containers/Main';
 import Header from '../components/Header';
 import AddPost from '../components/AddPost';
 //Actions
-import { updateVoteScore } from  '../actions';
+import { updateVoteScore, deletePost } from  '../actions';
 
 class App extends Component {
   handleVote = (id, type, vote) => {
@@ -34,22 +34,28 @@ class App extends Component {
       });
   }
 
+  onDeletePost = (postId) => {
+    const { deletePost } = this.props;
+    API.deletePost(postId);
+    deletePost(postId);
+  }
+
   render() {
     const { history, location } = this.props;
     return (
       <div className="app">
         <Header title="Post" history={history} location={location} />
         <Route exact path="/" render={(props) => (
-          <Main {...props} handleVote={this.handleVote} />
+          <Main {...props} handleVote={this.handleVote} handleDeletePost={this.onDeletePost} />
         )}/>
         <Switch>
           <Route path="/add_post" component={AddPost} />
           <Route exact path="/:category" render={(props) => (
-            <Main {...props} handleVote={this.handleVote} />
+            <Main {...props} handleVote={this.handleVote} handleDeletePost={this.onDeletePost} />
           )}/>
         </Switch>
         <Route path="/:category/:post" render={(props) => (
-          <PostDetails {...props} handleVote={this.handleVote} />
+          <PostDetails {...props} handleVote={this.handleVote} handleDeletePost={this.onDeletePost} />
         )}/>
       </div>
     );
@@ -61,6 +67,6 @@ App = connect(state => {
     categories: state.app.categories,
     posts: state.app.posts
   };
-}, { updateVoteScore })(App);
+}, { updateVoteScore, deletePost })(App);
 
 export default withRouter(App);

@@ -5,6 +5,8 @@ export const FETCH_COMMENTS = 'fetch_comments';
 export const FETCH_CATEGORY_POSTS = 'fetch_caregory_posts';
 export const UPDATE_VOTE_SCORE = 'update_vote_score';
 export const SORT_POSTS = 'sort_posts';
+export const UPDATE_POSTS = 'update_posts';
+export const DELETE_POST = 'delete_posts';
 export const UPDATE_COMMENTS = 'update_comments';
 export const DELETE_COMMENT = 'delete_comment';
 
@@ -65,6 +67,20 @@ export function deleteComment(commentId){
   return {
     type: DELETE_COMMENT,
     payload: commentId
+  };
+}
+
+export function updatePosts(post){
+  return {
+    type: UPDATE_POSTS,
+    payload: post
+  };
+}
+
+export function deletePost(postId){
+  return {
+    type: DELETE_POST,
+    payload: postId
   };
 }
 

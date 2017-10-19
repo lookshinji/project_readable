@@ -2,11 +2,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 //Style
-import { Row, Col, Glyph} from 'elemental';
+import { Row, Col, Button, Glyph} from 'elemental';
 //Components
 import Votes from './Votes';
 
-const Post = ({ post, date, handleVote, details }) => {
+const Post = ({ post, date, handleVote, details, handleDeletePost }) => {
   return (
     <div className="post">
       <div className="post_header">
@@ -19,8 +19,8 @@ const Post = ({ post, date, handleVote, details }) => {
           <ul className="post_details">
             <li><Glyph icon="calendar" /><span>{date(post.timestamp)}</span></li>
             <li><Glyph icon="person" /> <span> {post.author}</span> </li>
-            <li><a><Glyph icon="pencil" /></a></li>
-            <li><a><Glyph icon="trashcan" /></a></li>
+            <li><Button type="link"><Glyph icon="pencil"/></Button></li>
+            <li><Button type="link" onClick={() => handleDeletePost(post.id)}><Glyph icon="trashcan"/></Button></li>
           </ul>
           { details ?
             null :

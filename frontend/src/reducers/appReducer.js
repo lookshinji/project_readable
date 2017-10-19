@@ -8,6 +8,8 @@ import {
   SORT_POSTS,
   UPDATE_COMMENTS,
   DELETE_COMMENT,
+  UPDATE_POSTS,
+  DELETE_POST,
 } from '../actions.js';
 
 function appReducer (state = {
@@ -44,6 +46,20 @@ function appReducer (state = {
     return {
       ...state,
       posts: action.payload,
+    };
+
+  case DELETE_POST:
+    return {
+      ...state,
+      posts: state.posts.filter(post => {
+        return post.id !== action.payload;
+      }),
+    };
+
+  case UPDATE_POSTS:
+    return {
+      ...state,
+      posts: [...state.posts, action.payload]
     };
 
   case DELETE_COMMENT:
