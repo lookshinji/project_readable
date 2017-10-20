@@ -18,6 +18,7 @@ function appReducer (state = {
   posts: [],
   activepost:{},
   comments: [],
+  commentData: {},
 }, action) {
   switch (action.type) {
   case FETCH_CATEGORY:

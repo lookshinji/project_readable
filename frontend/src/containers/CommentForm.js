@@ -1,12 +1,12 @@
 //Libs
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, change } from 'redux-form';
 import { Button } from 'elemental';
 //Api
 import * as API from '../API';
 //Actions
-import { updateComments, editComment } from '../actions';
+import { updateComments } from '../actions';
 
 class CommentForm extends Component {
   submitComment = (values) => {
@@ -18,17 +18,24 @@ class CommentForm extends Component {
     reset();
   }
 
+  editComment = ({ commentAuthor, commentMessage }) => {
+    const { change } = this.props;
+
+    change('commentMessage', commentMessage);
+    change('commentAuthor', commentAuthor);
+  }
+
   render() {
-    const { handleSubmit, pristine, reset } = this.props;
-    const data = {
+    const { handleSubmit, pristine, reset, submitting } = this.props;
+    const commentData = {
       // used to populate "account" reducer when "Load" is clicked
       commentAuthor: 'Jane',
       commentMessage: 'Born to write amazing Redux code.'
-    }
+    };
     return (
       <form className="comment_form" onSubmit={handleSubmit(this.submitComment)}>
         <div>
-          <button type="button" onClick={() => load(data)}>
+          <button type="button" onClick={() => this.editComment(commentData)}>
             Load Account
           </button>
         </div>
