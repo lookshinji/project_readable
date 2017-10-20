@@ -7,6 +7,7 @@ import {
   FETCH_COMMENTS,
   SORT_POSTS,
   UPDATE_COMMENTS,
+  EDIT_COMMENT,
   DELETE_COMMENT,
   UPDATE_POSTS,
   DELETE_POST,
@@ -68,6 +69,12 @@ function appReducer (state = {
       comments: state.comments.filter(comment => {
         return comment.id !== action.payload;
       }),
+    };
+
+  case EDIT_COMMENT:
+    return {
+      ...state,
+      commentData: action.payload,
     };
 
   case UPDATE_COMMENTS:

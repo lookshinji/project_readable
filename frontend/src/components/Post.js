@@ -6,7 +6,7 @@ import { Row, Col, Button, Glyph} from 'elemental';
 //Components
 import Votes from './Votes';
 
-const Post = ({ post, date, handleVote, details, handleDeletePost }) => {
+const Post = ({ post, date, comments, handleVote, details, handleDeletePost }) => {
   return (
     <div className="post">
       <div className="post_header">

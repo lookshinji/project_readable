@@ -8,7 +8,6 @@ import { Button, Glyph } from 'elemental';
 import Votes from './Votes';
 
 const CommentList = ({ comments, date, handleVote, handleDelete }) => {
-  console.log(comments);
   return (
     <div className="comment container">
       <h3>Comments ({comments.length})</h3>

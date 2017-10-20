@@ -63,6 +63,13 @@ export function updateComments(comment){
   };
 }
 
+export function editComment(commentData){
+  return {
+    type: EDIT_COMMENT,
+    payload: commentData
+  };
+}
+
 export function deleteComment(commentId){
   return {
     type: DELETE_COMMENT,
