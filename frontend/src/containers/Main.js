@@ -27,9 +27,17 @@ class Main extends Component {
       });
 
     if (category === undefined ) {
+      let postsWithComments = [];
+
       API.getAllPosts()
         .then((posts) => {
-          fetchPosts(posts);
+          posts.map((post, idx) => {
+            API.getComments(post.id)
+              .then(comments => {
+                postsWithComments.push({...post, comments: comments.length});
+                (idx === posts.length - 1) && fetchPosts(postsWithComments);
+              });
+          });
         });
     } else {
       API.getCategoryPost(category)

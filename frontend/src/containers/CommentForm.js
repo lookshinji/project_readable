@@ -1,12 +1,12 @@
 //Libs
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Field, reduxForm, change } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import { Button } from 'elemental';
 //Api
 import * as API from '../API';
 //Actions
-import { updateComments } from '../actions';
+import { updateComments, editComment } from '../actions';
 
 class CommentForm extends Component {
   submitComment = (values) => {
@@ -14,33 +14,26 @@ class CommentForm extends Component {
     API.addComment(activepost.id, values)
       .then((comment) => {
         updateComments(comment);
+        reset();
       });
-    reset();
   }
 
-  editComment = ({ commentAuthor, commentMessage }) => {
-    const { change } = this.props;
-
-    change('commentMessage', commentMessage);
-    change('commentAuthor', commentAuthor);
+  submitCommentChange = (values) => {
+    const { commentId, editComment, reset, clearForm } = this.props;
+    API.editComment(commentId, values)
+      .then((comment) => {
+        editComment(comment);
+        clearForm();
+        reset();
+      });
   }
 
   render() {
-    const { handleSubmit, pristine, reset, submitting } = this.props;
-    const commentData = {
-      // used to populate "account" reducer when "Load" is clicked
-      commentAuthor: 'Jane',
-      commentMessage: 'Born to write amazing Redux code.'
-    };
+    const { handleSubmit, pristine, reset, submitting, commentId } = this.props;
     return (
-      <form className="comment_form" onSubmit={handleSubmit(this.submitComment)}>
-        <div>
-          <button type="button" onClick={() => this.editComment(commentData)}>
-            Load Account
-          </button>
-        </div>
+      <form className="comment_form" onSubmit={handleSubmit(commentId ? this.submitCommentChange : this.submitComment)}>
         <Field component="textarea" placeholder="write a comment" name="commentMessage" rows="8"/>
-        <Field component="input" placeholder="your name" name="commentAuthor" />
+        <Field component="input" placeholder="your name" name="commentAuthor" disabled={commentId ? true : false } />
         <Button submit disabled={pristine || submitting}>Send</Button>
         <Button disabled={pristine || submitting} onClick={reset}>
           Undo Changes
@@ -56,8 +49,9 @@ CommentForm = reduxForm({
 
 CommentForm = connect(state => {
   return {
-    commentData: state.app.commentData
+    activepost: state.app.activepost,
+    commentData: state.app.commentData,
   };
-}, { updateComments })(CommentForm);
+}, { updateComments, editComment })(CommentForm);
 
 export default CommentForm;

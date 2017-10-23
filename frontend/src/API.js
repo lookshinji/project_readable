@@ -74,6 +74,17 @@ export const addComment = (postID, values) => {
   }).then(res => res.json());
 };
 
+export const editComment = (commentId, values) => {
+  return fetch(`${api}/comments/${commentId}`, {
+    method: 'PUT',
+    headers,
+    body: JSON.stringify({
+      timestamp: Date.now(),
+      body: values.commentMessage,
+    })
+  }).then(res => res.json());
+};
+
 export const deleteComment = (commentId) => {
   return fetch(`${api}/comments/${commentId}`, {
     method: 'DELETE',

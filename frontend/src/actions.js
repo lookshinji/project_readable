@@ -64,10 +64,10 @@ export function updateComments(comment){
   };
 }
 
-export function editComment(commentData){
+export function editComment(comment){
   return {
     type: EDIT_COMMENT,
-    payload: commentData
+    payload: comment
   };
 }
 

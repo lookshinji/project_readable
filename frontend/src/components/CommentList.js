@@ -1,5 +1,7 @@
 //Libs
 import React, { Component } from 'react';
+import { change } from 'redux-form';
+import { connect } from 'react-redux';
 //Containers
 import CommentForm from '../containers/CommentForm';
 //Style
@@ -9,14 +11,21 @@ import Votes from './Votes';
 
 class CommentList extends Component {
   state = {
-    commentData: {},
+    commentId: ''
+  }
+
+  editComment = (comment) => {
+    const { change } = this.props;
+    change('comment', 'commentMessage', comment.body);
+    change('comment', 'commentAuthor', comment.author);
+    this.setState({commentId: comment.id});
   };
 
   render() {
     const { comments, date, handleVote, handleDelete } = this.props;
     return (
       <div className="comment container">
-        <h3>Comments ({comments.length})</h3>
+        <h3 id="comments">Comments ({comments.length})</h3>
         <ul className="comment_list">
           {comments.map((comment) => (
             <li key={comment.id}>
@@ -27,7 +36,7 @@ class CommentList extends Component {
                   <ul className="comment_details">
                     <li><Glyph icon="calendar" /> <span>{date(comment.timestamp)}</span></li>
                     <li><Glyph icon="person" /> <span> {comment.author}</span> </li>
-                    <li><Button type="link" onClick={() => this.setState({commentData: comment})}><Glyph icon="pencil" /></Button></li>
+                    <li><Button type="link" onClick={() => this.editComment(comment)}><Glyph icon="pencil" /></Button></li>
                     <li><Button type="link" onClick={() => handleDelete(comment.id)}><Glyph icon="trashcan"/></Button></li>
                   </ul>
                 </div>
@@ -36,10 +45,16 @@ class CommentList extends Component {
           ))}
         </ul>
         <h3>Add a comment</h3>
-        <CommentForm commentData={this.state.commentData} />
+        <CommentForm clearForm={() => this.setState({commentId: ''})} commentId={this.state.commentId}/>
       </div>
     );
   }
 };
+
+CommentList = connect(state => {
+  return {
+    comments: state.app.comments
+  };
+}, { change })(CommentList);
 
 export default CommentList;

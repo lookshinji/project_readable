@@ -7,6 +7,7 @@ import { Row, Col, Button, Glyph} from 'elemental';
 import Votes from './Votes';
 
 const Post = ({ post, date, comments, handleVote, details, handleDeletePost }) => {
+  console.log('POST',post);
   return (
     <div className="post">
       <div className="post_header">
@@ -24,7 +25,7 @@ const Post = ({ post, date, comments, handleVote, details, handleDeletePost }) =
           </ul>
           { details ?
             null :
-            <a>31 comments</a>
+            <Link to={{pathname: `/${post.category}/${post.id}/#comments`, state: {fromPost: true}}}>{post.comments} comments</Link>
           }
         </div>
       </div>

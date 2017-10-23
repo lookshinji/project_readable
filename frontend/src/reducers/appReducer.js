@@ -18,7 +18,6 @@ function appReducer (state = {
   posts: [],
   activepost:{},
   comments: [],
-  commentData: {},
 }, action) {
   switch (action.type) {
   case FETCH_CATEGORY:
@@ -27,10 +26,12 @@ function appReducer (state = {
       categories: action.payload,
     };
   case FETCH_POSTS:
+    console.log('REDUCER', action.payload);
     return {
       ...state,
       posts:
         action.payload.sort((a, b) => {
+          console.log(a);
           return b.timestamp - a.timestamp;
         })
     };
@@ -73,9 +74,18 @@ function appReducer (state = {
     };
 
   case EDIT_COMMENT:
+    console.log(action.payload);
     return {
       ...state,
-      commentData: action.payload,
+      comments: state.comments.map((comment) => {
+        if(comment.id !== action.payload.id) {
+          return comment;
+        }
+        return {
+          ...comment,
+          body: action.payload.body
+        };
+      }),
     };
 
   case UPDATE_COMMENTS:

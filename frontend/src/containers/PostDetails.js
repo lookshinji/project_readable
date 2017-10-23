@@ -46,7 +46,6 @@ class PostDetails extends Component {
           details/>
         <CommentList
           date={normalizedDate}
-          comments={comments}
           handleVote={handleVote}
           handleDelete={this.onDeleteComment} />
       </div>
