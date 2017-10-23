@@ -28,7 +28,6 @@ class Main extends Component {
 
     if (category === undefined ) {
       let postsWithComments = [];
-
       API.getAllPosts()
         .then((posts) => {
           posts.map((post, idx) => {
@@ -40,9 +39,16 @@ class Main extends Component {
           });
         });
     } else {
+      let postsWithComments = [];
       API.getCategoryPost(category)
         .then((categoryPosts) => {
-          fetchCategoryPosts(categoryPosts);
+          categoryPosts.map((post, idx) => {
+            API.getComments(post.id)
+              .then(comments =>{
+                postsWithComments.push({...post, comments: comments.length});
+                (idx === categoryPosts.length -1) && fetchCategoryPosts(postsWithComments);
+              });
+          });
         });
     }
   }
@@ -50,18 +56,30 @@ class Main extends Component {
   componentDidUpdate(prevProps, prevState){
     const { category } = this.props.match.params;
     const { fetchCategoryPosts } = this.props;
-    if (prevProps.match.params.category !== category) {
-      if (category === undefined ) {
-        API.getAllPosts()
-          .then((posts) => {
-            fetchPosts(posts);
+    if (category === undefined ) {
+      let postsWithComments = [];
+      API.getAllPosts()
+        .then((posts) => {
+          posts.map((post, idx) => {
+            API.getComments(post.id)
+              .then(comments => {
+                postsWithComments.push({...post, comments: comments.length});
+                (idx === posts.length - 1) && fetchPosts(postsWithComments);
+              });
           });
-      } else {
-        API.getCategoryPost(category)
-          .then((categoryPosts) => {
-            fetchCategoryPosts(categoryPosts);
+        });
+    } else {
+      let postsWithComments = [];
+      API.getCategoryPost(category)
+        .then((categoryPosts) => {
+          categoryPosts.map((post, idx) => {
+            API.getComments(post.id)
+              .then(comments =>{
+                postsWithComments.push({...post, comments: comments.length});
+                (idx === categoryPosts.length -1) && fetchCategoryPosts(postsWithComments);
+              });
           });
-      }
+        });
     }
   }
 
