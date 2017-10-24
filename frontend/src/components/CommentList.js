@@ -44,7 +44,7 @@ class CommentList extends Component {
             </li>
           ))}
         </ul>
-        <h3>Add a comment</h3>
+        <h3 id="edit_comment">{this.state.commentId ? 'Edit Comment' : 'Add a comment'}</h3>
         <CommentForm clearForm={() => this.setState({commentId: ''})} commentId={this.state.commentId}/>
       </div>
     );

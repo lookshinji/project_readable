@@ -10,6 +10,8 @@ export const DELETE_POST = 'delete_posts';
 export const EDIT_COMMENT = 'edit_comment';
 export const UPDATE_COMMENTS = 'update_comments';
 export const DELETE_COMMENT = 'delete_comment';
+export const EDIT_POST = 'edit_post';
+export const SAVE_POST = 'save_post';
 
 export function fetchCategories(categories) {
   return {
@@ -85,9 +87,23 @@ export function updatePosts(post){
   };
 }
 
+export function editPost(post){
+  return {
+    type: EDIT_COMMENT,
+    payload: post
+  };
+}
+
 export function deletePost(postId){
   return {
     type: DELETE_POST,
+    payload: postId
+  };
+}
+
+export function savePost(postId){
+  return {
+    type: SAVE_POST,
     payload: postId
   };
 }

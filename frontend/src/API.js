@@ -52,6 +52,17 @@ export const addPost = (values) => {
   }).then(res => res.json());
 };
 
+export const editPost = (postId, values) => {
+  return fetch(`${api}/posts/${postId}`, {
+    method: 'PUT',
+    headers,
+    body: JSON.stringify({
+      title: values.postTitle,
+      body: values.postMessage,
+    })
+  }).then(res => res.json());
+};
+
 export const deletePost = (postId) => {
   return fetch(`${api}/posts/${postId}`, {
     method: 'DELETE',

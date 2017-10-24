@@ -29,15 +29,12 @@ class CommentForm extends Component {
   }
 
   render() {
-    const { handleSubmit, pristine, reset, submitting, commentId } = this.props;
+    const { handleSubmit, commentId } = this.props;
     return (
       <form className="comment_form" onSubmit={handleSubmit(commentId ? this.submitCommentChange : this.submitComment)}>
         <Field component="textarea" placeholder="write a comment" name="commentMessage" rows="8"/>
         <Field component="input" placeholder="your name" name="commentAuthor" disabled={commentId ? true : false } />
-        <Button submit disabled={pristine || submitting}>Send</Button>
-        <Button disabled={pristine || submitting} onClick={reset}>
-          Undo Changes
-        </Button>
+        <Button submit>{commentId ? 'Save Changes' : 'Add Comment' }</Button>
       </form>
     );
   }

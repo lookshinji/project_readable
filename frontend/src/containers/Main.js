@@ -10,7 +10,6 @@ import PostList from '../components/PostList';
 import { Row, Col } from 'elemental';
 //Actions
 import {
-  fetchCategories,
   fetchCategoryPosts,
   fetchPosts,
   updateVoteScore,
@@ -18,13 +17,8 @@ import {
 
 class Main extends Component {
   componentDidMount(){
-    const { fetchCategories, fetchPosts, fetchCategoryPosts } = this.props;
+    const { fetchPosts, fetchCategoryPosts } = this.props;
     const { category } = this.props.match.params;
-
-    API.getCategories()
-      .then((categories) => {
-        fetchCategories(categories);
-      });
 
     if (category === undefined ) {
       let postsWithComments = [];
@@ -36,6 +30,7 @@ class Main extends Component {
                 postsWithComments.push({...post, comments: comments.length});
                 (idx === posts.length - 1) && fetchPosts(postsWithComments);
               });
+            return (postsWithComments);
           });
         });
     } else {
@@ -48,6 +43,7 @@ class Main extends Component {
                 postsWithComments.push({...post, comments: comments.length});
                 (idx === categoryPosts.length -1) && fetchCategoryPosts(postsWithComments);
               });
+            return (postsWithComments);
           });
         });
     }
@@ -56,30 +52,34 @@ class Main extends Component {
   componentDidUpdate(prevProps, prevState){
     const { category } = this.props.match.params;
     const { fetchCategoryPosts } = this.props;
-    if (category === undefined ) {
-      let postsWithComments = [];
-      API.getAllPosts()
-        .then((posts) => {
-          posts.map((post, idx) => {
-            API.getComments(post.id)
-              .then(comments => {
-                postsWithComments.push({...post, comments: comments.length});
-                (idx === posts.length - 1) && fetchPosts(postsWithComments);
-              });
+    if (prevProps.match.params.category !== category) {
+      if (category === undefined ) {
+        let postsWithComments = [];
+        API.getAllPosts()
+          .then((posts) => {
+            posts.map((post, idx) => {
+              API.getComments(post.id)
+                .then(comments => {
+                  postsWithComments.push({...post, comments: comments.length});
+                  (idx === posts.length - 1) && fetchPosts(postsWithComments);
+                });
+              return (postsWithComments);
+            });
           });
-        });
-    } else {
-      let postsWithComments = [];
-      API.getCategoryPost(category)
-        .then((categoryPosts) => {
-          categoryPosts.map((post, idx) => {
-            API.getComments(post.id)
-              .then(comments =>{
-                postsWithComments.push({...post, comments: comments.length});
-                (idx === categoryPosts.length -1) && fetchCategoryPosts(postsWithComments);
-              });
+      } else {
+        let postsWithComments = [];
+        API.getCategoryPost(category)
+          .then((categoryPosts) => {
+            categoryPosts.map((post, idx) => {
+              API.getComments(post.id)
+                .then(comments =>{
+                  postsWithComments.push({...post, comments: comments.length});
+                  (idx === categoryPosts.length -1) && fetchCategoryPosts(postsWithComments);
+                });
+              return (postsWithComments);
+            });
           });
-        });
+      }
     }
   }
 
@@ -123,4 +123,4 @@ export default connect(state => {
     categories: state.app.categories,
     posts: state.app.posts
   };
-}, { fetchCategories, fetchCategoryPosts, fetchPosts, updateVoteScore, sortPosts })(Main);
+}, { fetchCategoryPosts, fetchPosts, updateVoteScore, sortPosts })(Main);

@@ -7,13 +7,23 @@ import * as API from '../API';
 //Containers
 import PostDetails from '../containers/PostDetails';
 import Main from '../containers/Main';
+import PostForm from '../containers/PostForm';
+
 //Components
 import Header from '../components/Header';
-import AddPost from '../components/AddPost';
 //Actions
-import { updateVoteScore, deletePost } from  '../actions';
+import { updateVoteScore, fetchCategories, deletePost } from  '../actions';
 
 class App extends Component {
+
+  componentDidMount() {
+    const { fetchCategories } = this.props;
+    API.getCategories()
+      .then((categories) => {
+        fetchCategories(categories);
+      });
+  }
+
   handleVote = (id, type, vote) => {
     const { updateVoteScore } = this.props;
     let apiType = '';
@@ -49,7 +59,7 @@ class App extends Component {
           <Main {...props} handleVote={this.handleVote} handleDeletePost={this.onDeletePost} />
         )}/>
         <Switch>
-          <Route path="/add_post" component={AddPost} />
+          <Route path="/add_post" component={PostForm} history={history} />
           <Route exact path="/:category" render={(props) => (
             <Main {...props} handleVote={this.handleVote} handleDeletePost={this.onDeletePost} />
           )}/>
@@ -67,6 +77,6 @@ App = connect(state => {
     categories: state.app.categories,
     posts: state.app.posts
   };
-}, { updateVoteScore, deletePost })(App);
+}, { updateVoteScore, fetchCategories, deletePost })(App);
 
 export default withRouter(App);

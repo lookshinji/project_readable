@@ -17,10 +17,6 @@ const defaultData = {
         name: 'udacity',
         path: 'udacity'
       },
-      {
-        name: 'react native',
-        path: 'react_native'
-      }
   ]
 }
 

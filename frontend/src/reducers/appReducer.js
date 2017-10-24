@@ -11,6 +11,8 @@ import {
   DELETE_COMMENT,
   UPDATE_POSTS,
   DELETE_POST,
+  EDIT_POST,
+  SAVE_POST,
 } from '../actions.js';
 
 function appReducer (state = {
@@ -18,6 +20,7 @@ function appReducer (state = {
   posts: [],
   activepost:{},
   comments: [],
+  postId: '',
 }, action) {
   switch (action.type) {
   case FETCH_CATEGORY:
@@ -26,12 +29,10 @@ function appReducer (state = {
       categories: action.payload,
     };
   case FETCH_POSTS:
-    console.log('REDUCER', action.payload);
     return {
       ...state,
       posts:
         action.payload.sort((a, b) => {
-          console.log(a);
           return b.timestamp - a.timestamp;
         })
     };
@@ -59,6 +60,28 @@ function appReducer (state = {
       }),
     };
 
+  case SAVE_POST:
+    return {
+      ...state,
+      postId: action.payload,
+    };
+
+  case EDIT_POST:
+    console.log(action.payload);
+    return {
+      ...state,
+      posts: state.comments.map((post) => {
+        if(post.id !== action.payload.id) {
+          return post;
+        }
+        return {
+          ...post,
+          title: action.payload.title,
+          body: action.payload.body
+        };
+      }),
+    };
+
   case UPDATE_POSTS:
     return {
       ...state,
@@ -74,7 +97,6 @@ function appReducer (state = {
     };
 
   case EDIT_COMMENT:
-    console.log(action.payload);
     return {
       ...state,
       comments: state.comments.map((comment) => {
