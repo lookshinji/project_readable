@@ -3,12 +3,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 //Helpers & API
 import * as API from '../API';
-import { normalizedDate } from '../helpers.js';
+import { normalizedDate } from '../helpers';
+//Containers
+import CommentList from './CommentList';
 //Components
-import CommentList from '../components/CommentList';
 import Post from '../components/Post';
 //Actions
-import { fetchPost, fecthComments, deleteComment } from  '../actions.js';
+import { fetchPost, fecthComments, deleteComment } from  '../actions';
 
 class PostDetails extends Component {
 
@@ -17,21 +18,23 @@ class PostDetails extends Component {
     const { fetchPost, fecthComments } = this.props;
 
     API.getPost(post)
-      .then((post) => {
-        fetchPost(post);
+      .then((response) => {
+        fetchPost(response);
       });
 
     API.getComments(post)
-      .then((comments) => {
-        fecthComments(comments);
+      .then((response) => {
+        fecthComments(response);
       });
   };
 
   onDeleteComment = (commentId) => {
     const { deleteComment } = this.props;
-    API.deleteComment(commentId);
-    deleteComment(commentId);
-  }
+    API.deleteComment(commentId)
+      .then((response) => {
+        deleteComment(commentId);
+      });
+  };
 
   render() {
     const { activepost, comments, handleVote, handleDeletePost } = this.props;

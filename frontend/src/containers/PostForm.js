@@ -6,7 +6,7 @@ import { Button } from 'elemental';
 //Api
 import * as API from '../API';
 //Actions
-import { updatePosts, editPost } from '../actions';
+import { updatePosts, editPost, resetPostId } from '../actions';
 
 class PostForm extends Component {
   submitPost = (values) => {
@@ -20,10 +20,11 @@ class PostForm extends Component {
   }
 
   submitPostChange = (values) => {
-    const { postId, editPost, reset, history } = this.props;
+    const { postId, editPost, resetPostId, reset, history } = this.props;
     API.editPost(postId, values)
       .then((post) => {
         editPost(post);
+        resetPostId();
         reset();
         history.push('/');
       });
@@ -36,14 +37,14 @@ class PostForm extends Component {
         <h2>Add a post</h2>
         <form onSubmit={handleSubmit(postId ? this.submitPostChange : this.submitPost)}>
           <Field component="input" placeholder="Post Title" name="postTitle" />
-          <Field component="select" placeholder="Category" name="postCategory" disabled={postId ? true : false}>
+          <Field component="select" placeholder="Category" name="postCategory" disabled={!!postId}>
             <option defaultValue >Category</option>
             {categories.map((category) => (
               <option key={category.name}>{category.name}</option>
             ))}
           </Field>
           <Field component="textarea" placeholder="Type a message" name="postMessage" rows="8"/>
-          <Field component="input" placeholder="Name" name="postAuthor" disabled={postId ? true : false}/>
+          <Field component="input" placeholder="Name" name="postAuthor" disabled={!!postId}/>
           <Button submit>{postId ? 'Save Changes' : 'Add Post' }</Button>
         </form>
       </div>
@@ -60,6 +61,6 @@ PostForm = connect(state => {
     categories: state.app.categories,
     postId: state.app.postId
   };
-}, { updatePosts, editPost })(PostForm);
+}, { updatePosts, editPost, resetPostId })(PostForm);
 
 export default PostForm;

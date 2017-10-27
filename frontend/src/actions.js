@@ -12,6 +12,7 @@ export const UPDATE_COMMENTS = 'update_comments';
 export const DELETE_COMMENT = 'delete_comment';
 export const EDIT_POST = 'edit_post';
 export const SAVE_POST = 'save_post';
+export const RESET_POST_ID = 'reset_post_id';
 
 export function fetchCategories(categories) {
   return {
@@ -114,3 +115,9 @@ export function sortPosts(sortBy) {
     payload: sortBy
   };
 };
+
+export function resetPostId(){
+  return {
+    type: RESET_POST_ID,
+  };
+}

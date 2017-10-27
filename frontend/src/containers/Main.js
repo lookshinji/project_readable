@@ -7,7 +7,7 @@ import * as API from '../API';
 //Components
 import PostList from '../components/PostList';
 //Style
-import { Row, Col } from 'elemental';
+import { Row, Col, Button } from 'elemental';
 //Actions
 import {
   fetchCategoryPosts,
@@ -20,7 +20,7 @@ class Main extends Component {
     const { fetchPosts, fetchCategoryPosts } = this.props;
     const { category } = this.props.match.params;
 
-    if (category === undefined ) {
+    if (!category) {
       let postsWithComments = [];
       API.getAllPosts()
         .then((posts) => {
@@ -53,7 +53,7 @@ class Main extends Component {
     const { category } = this.props.match.params;
     const { fetchCategoryPosts } = this.props;
     if (prevProps.match.params.category !== category) {
-      if (category === undefined ) {
+      if (!category) {
         let postsWithComments = [];
         API.getAllPosts()
           .then((posts) => {
@@ -94,8 +94,8 @@ class Main extends Component {
               <h4>{ categoryName ? `Category: ${categoryName.replace(/[^A-Z0-9]+/ig, ' ')}` : 'All Posts'}</h4>
               <ul>
                 <li><h5>sort by:</h5></li>
-                <li><Link to="#" onClick={()=>sortPosts('BY_DATE')}>date</Link></li>
-                <li><Link to="#" onClick={()=>sortPosts('BY_VOTE')}>vote</Link></li>
+                <li><button className="sort-link" onClick={()=>sortPosts('BY_DATE')}>date</button></li>
+                <li><button className="sort-link" onClick={()=>sortPosts('BY_VOTE')}>vote</button></li>
               </ul>
             </div>
             <ul className="main-posts">

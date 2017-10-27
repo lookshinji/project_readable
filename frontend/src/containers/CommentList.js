@@ -2,12 +2,12 @@
 import React, { Component } from 'react';
 import { change } from 'redux-form';
 import { connect } from 'react-redux';
-//Containers
-import CommentForm from '../containers/CommentForm';
 //Style
 import { Button, Glyph } from 'elemental';
+//Containers
+import CommentForm from './CommentForm';
 //Components
-import Votes from './Votes';
+import Votes from '../components/Votes';
 
 class CommentList extends Component {
   state = {

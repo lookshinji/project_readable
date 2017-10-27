@@ -13,6 +13,7 @@ import {
   DELETE_POST,
   EDIT_POST,
   SAVE_POST,
+  RESET_POST_ID,
 } from '../actions.js';
 
 function appReducer (state = {
@@ -32,7 +33,7 @@ function appReducer (state = {
     return {
       ...state,
       posts:
-        action.payload.sort((a, b) => {
+        [...action.payload].sort((a, b) => {
           return b.timestamp - a.timestamp;
         })
     };
@@ -67,7 +68,6 @@ function appReducer (state = {
     };
 
   case EDIT_POST:
-    console.log(action.payload);
     return {
       ...state,
       posts: state.comments.map((post) => {
@@ -80,6 +80,12 @@ function appReducer (state = {
           body: action.payload.body
         };
       }),
+    };
+
+  case RESET_POST_ID:
+    return {
+      ...state,
+      postId: ''
     };
 
   case UPDATE_POSTS:
@@ -161,7 +167,7 @@ function appReducer (state = {
       return {
         ...state,
         posts:
-          state.posts.sort((a, b) => {
+          [...state.posts].sort((a, b) => {
             return b.voteScore - a.voteScore;
           })
       };
@@ -169,7 +175,7 @@ function appReducer (state = {
       return {
         ...state,
         posts:
-          state.posts.sort((a, b) => {
+          [...state.posts].sort((a, b) => {
             return b.timestamp - a.timestamp;
           })
       };

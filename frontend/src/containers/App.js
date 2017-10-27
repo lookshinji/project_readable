@@ -8,7 +8,6 @@ import * as API from '../API';
 import PostDetails from '../containers/PostDetails';
 import Main from '../containers/Main';
 import PostForm from '../containers/PostForm';
-
 //Components
 import Header from '../components/Header';
 //Actions
